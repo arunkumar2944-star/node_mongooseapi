@@ -26,9 +26,9 @@ router.post('/login', async (req, res) => {
             email: req.body.email,
         });
         const isMatch = await Security.Compare(req.body.password, user.password)
-        if (isMatch) {
-            console.log('Password match')
-        }
+        // if (isMatch) {
+        //     console.log('Password match')
+        // }
         if (!user && !isMatch) {
             return res.status(401).json({
                 success: false,

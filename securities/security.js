@@ -22,7 +22,6 @@ async function EncryptString(PlainTextPWD) {
     const isMatch = await bcrypt.compare(incomingPassword, storedHash);
 
     if (isMatch) {
-        console.log("Login successful!");
         return true;
     } else {
         console.log("Invalid credentials.");
