@@ -14,6 +14,7 @@ router.get('/', async (req, res) => {
     }
 });
 
+
 //GET:User Login
 router.post('/login', async (req, res) => {
 
@@ -58,11 +59,14 @@ router.post('/', async (req, res) => {
         gender: req.body.gender,
         phoneNo: req.body.phoneNo,
         email: req.body.email,
+        type:req.body.type,
         password:await Security.EncryptString(req.body.password),
         createdAt: Date.now(),
+        isActive:true
     });
 
     try {
+        console.log(newUser)
         const savedUser = await newUser.save();
         res.status(201).json(savedUser);
     } catch (err) {
