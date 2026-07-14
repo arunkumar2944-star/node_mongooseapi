@@ -94,9 +94,13 @@ router.put('/:id',auth, async (req, res) => {
         const updatedUser = await User.findByIdAndUpdate(
             req.params.id,
             req.body,
-            { new: true }
+            { returnDocument: 'after' }
         );
-        res.json(updatedUser);
+        res.status(200).json({
+                success: true,
+                message: 'Updated successful',
+                user: updatedUser,
+            });
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
