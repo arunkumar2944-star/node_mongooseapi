@@ -24,7 +24,7 @@ async function EncryptString(PlainTextPWD) {
     if (isMatch) {
         return true;
     } else {
-        console.log("Invalid credentials.");
+        // console.log("Invalid credentials.");
         return false;
     }
 
