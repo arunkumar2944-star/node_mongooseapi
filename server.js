@@ -2,12 +2,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
+
 require('dotenv').config({
   path: './config/dev.env'
 });
 
 const userRoutes = require('./routes/userroutes');
-
+const noteRoutes=require('./routes/noteroutes')
 const app = express();
 
 
@@ -18,7 +20,14 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes Link
 app.use('/api/users', userRoutes);
+app.use('/api/notes',noteRoutes);
 
+app.use(
+    '/uploads',
+    express.static(
+        path.join(__dirname, 'uploads')
+    )
+);
 // Database Connection
 console.log(process.env.MONGODB_URL)
 mongoose.connect(process.env.MONGODB_URL)

@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
   token:{type:String,required:false},
   createdBy: Number ,
   createdAt: Date,
-  updatedBy: Number ,
+  updatedBy: {type:mongoose.Schema.Types.ObjectId,ref:'User'} ,
   updatedAt: Date,
   isActive: Boolean
 });

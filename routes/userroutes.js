@@ -7,7 +7,7 @@ const Security = require('../securities/security');
 const jwt = require('jsonwebtoken');
 const auth = require('../securities/middleware/auth')
 // GET: Fetch all users
-router.get('/', auth, async (req, res) => {
+router.get('/list', auth, async (req, res) => {
     try {
         const users = await User.find();
         res.json(users);
@@ -16,6 +16,29 @@ router.get('/', auth, async (req, res) => {
     }
 });
 
+//GET:Userby ID
+
+router.get('/getByID/:id', auth, async (req, res) => {
+    try {
+        const users = await User.findOne({_id:req.query.id});
+        res.json(users);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+//GET:Userby email
+
+router.get('/getByEmail/:email', auth, async (req, res) => {
+    try {
+        const users = await User.findOne(
+            {email:req.query.email}
+        );
+        res.json(users);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
 
 //POST:User Login
 router.post('/login', async (req, res) => {
@@ -111,7 +134,7 @@ router.post('/', async (req, res) => {
     });
 
     try {
-        console.log(newUser)
+        // console.log(newUser)
         const savedUser = await newUser.save();
         res.status(201).json(savedUser);
     } catch (err) {
