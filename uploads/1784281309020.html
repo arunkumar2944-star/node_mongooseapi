@@ -1,0 +1,378 @@
+<div class="max-w-7xl mx-auto p-6">
+
+    <!-- Header -->
+
+    <div class="mb-8">
+
+        <h1 class="text-3xl font-bold text-gray-800">
+            📝 Create New Note
+        </h1>
+
+        <p class="text-gray-500 mt-2">
+            Organize your ideas, reminders and tasks.
+        </p>
+        <div class="w-full justify-end text-end">
+            <a routerLink="/home/notes" class="text-blue-400 hover:cursor-pointer hover:underline hover:font-bold">Back
+                to Dashboard</a>
+        </div>
+    </div>
+
+    <form [formGroup]="noteForm" (ngSubmit)="saveNote()">
+
+        <div class="bg-white shadow-xl rounded-2xl p-8 space-y-8">
+
+            <!-- Basic Information -->
+
+            <div>
+
+                <h2 class="text-xl font-semibold mb-5">
+                    Basic Information
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    <!-- Title -->
+
+                    <div class="lg:col-span-3">
+
+                        <label class="block mb-2 font-medium">
+                            Title
+                        </label>
+
+                        <input type="text" formControlName="title" placeholder="Enter note title" #noteTitle
+                            class="w-full border rounded-xl px-4 py-3">
+                        @if (title?.invalid && title?.touched) {
+
+                        <div class="mt-1 text-red-500 text-sm">
+
+                            @if (title?.errors?.['required']) {
+                            <p>Title is required.</p>
+                            }
+
+                            @if (title?.errors?.['minlength']) {
+                            <p>Minimum 5 characters required.</p>
+                            }
+
+                            @if (title?.errors?.['maxlength']) {
+                            <p>Maximum 100 characters allowed.</p>
+                            }
+
+                        </div>
+                        }
+                    </div>
+
+                    <!-- Category -->
+
+                    <div>
+
+                        <label class="block mb-2 font-medium">
+                            Category
+                        </label>
+
+                        <select formControlName="category" class="w-full border rounded-xl px-4 py-3">
+                            <option value="">Select One</option>
+                            <option value="Personal">👤 Personal</option>
+                            <option value="Work">💼 Work</option>
+                            <option value="Study">📚 Study</option>
+                            <option value="Meeting">🤝 Meeting</option>
+
+                        </select>
+                        @if (category?.invalid && category?.touched) {
+                        <p class="text-red-500 text-sm mt-1">
+                            Please select a category.
+                        </p>
+                        }
+                    </div>
+
+                    <!-- Priority -->
+
+                    <div>
+
+                        <label class="block mb-2 font-medium">
+                            Priority
+                        </label>
+
+                        <select formControlName="priority" class="w-full border rounded-xl px-4 py-3">
+                            <option value="">Select One</option>
+                            <option value="Low">🟢 Low</option>
+                            <option value="Medium">🟡 Medium</option>
+                            <option value="High">🔴 High</option>
+
+                        </select>
+                        @if (priority?.invalid && priority?.touched) {
+                        <p class="text-red-500 text-sm mt-1">
+                            Please select a priority.
+                        </p>
+                        }
+                    </div>
+
+                    <!-- Status -->
+
+                    <div>
+
+                        <label class="block mb-2 font-medium">
+                            Status
+                        </label>
+
+                        <select formControlName="status" class="w-full border rounded-xl px-4 py-3">
+
+                            <option value="">Select One</option>
+                            <option value="Draft">📝 Draft</option>
+                            <option value="Active">✅ Active</option>
+                            <option value="Completed">✔️ Completed</option>
+                            <option value="Archived">📦 Archived</option>
+
+                        </select>
+                        @if (status?.invalid && status?.touched) {
+                        <p class="text-red-500 text-sm mt-1">
+                            Please select a status.
+                        </p>
+                        }
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Details -->
+
+            <div>
+
+                <h2 class="text-xl font-semibold mb-5">
+                    Details
+                </h2>
+
+                <textarea rows="8" formControlName="details" placeholder="Write your note..."
+                    class="w-full border rounded-xl px-4 py-3 resize-none">
+                </textarea>
+                @if (details?.invalid && details?.touched) {
+
+                <div class="mt-1 text-red-500 text-sm">
+
+                    @if (details?.errors?.['required']) {
+                    <p>Details are required.</p>
+                    }
+
+                    @if (details?.errors?.['minlength']) {
+                    <p>Minimum 10 characters required.</p>
+                    }
+
+                </div>
+                }
+            </div>
+
+            <!-- Tags & Visibility -->
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <div>
+
+                    <label class="block mb-2 font-medium">
+                        Tags
+                    </label>
+
+                    <input type="text" formControlName="Tag" placeholder="Angular, TypeScript"
+                        class="w-full border rounded-xl px-4 py-3">
+                    @if (tag?.invalid && tag?.touched) {
+
+                    <div class="mt-1 text-red-500 text-sm">
+
+                        @if (tag?.errors?.['required']) {
+                        <p>Tag is required.</p>
+                        }
+
+                        @if (tag?.errors?.['minlength']) {
+                        <p>Enter at least 2 characters.</p>
+                        }
+
+                    </div>
+                    }
+                </div>
+
+                <div>
+
+                    <label class="block mb-2 font-medium">
+                        Visibility
+                    </label>
+
+                    <select formControlName="visibility" class="w-full border rounded-xl px-4 py-3">
+                        <option value="">Select One</option>
+                        <option value="Private">🔒 Private</option>
+                        <option value="Team">👥 Team</option>
+                        <option value="Public">🌍 Public</option>
+
+                    </select>
+                    @if (visibility?.invalid && visibility?.touched) {
+
+                    <p class="text-red-500 text-sm mt-1">
+                        Please select visibility.
+                    </p>
+
+                    }
+                </div>
+
+            </div>
+
+            <!-- Dates -->
+
+            <div>
+
+                <h2 class="text-xl font-semibold mb-5">
+                    Schedule
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    <!-- <div>
+
+                        <label class="block mb-2 font-medium">
+                            Created Date
+                        </label>
+
+                        <input type="date" formControlName="date" class="w-full border rounded-xl px-4 py-3">
+
+                    </div> -->
+
+                    <div>
+
+                        <label class="block mb-2 font-medium">
+                            Due Date
+                        </label>
+
+                        <input type="date" formControlName="dueDate" class="w-full border rounded-xl px-4 py-3">
+                        @if (dueDate?.invalid && dueDate?.touched) {
+
+                        <p class="text-red-500 text-sm mt-1">
+                            Due date is required.
+                        </p>
+                        }
+                    </div>
+
+                    <div>
+
+                        <label class="block mb-2 font-medium">
+                            Reminder Date
+                        </label>
+
+                        <input type="date" formControlName="reminderDate" class="w-full border rounded-xl px-4 py-3">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Attachment -->
+
+            <div>
+
+                <label class="block mb-2 font-medium">
+                    Attachment
+                </label>
+
+                <input type="file" (change)="onFileSelected($event)" multiple
+                    class="w-full border rounded-xl px-4 py-3">
+                @if (attachments?.invalid && attachments?.touched) {
+
+                <p class="text-red-500 text-sm mt-1">
+                    Please upload a file.
+                </p>
+                }
+                <div class="mt-4 space-y-2">
+
+                    @for (file of selectedFiles; track $index) {
+
+                    <div class="flex justify-between items-center border rounded-lg p-2">
+
+                        <span>{{ file.name }}</span>
+
+                        <button type="button" class="text-red-500" (click)="removeFile($index)">
+
+                            ❌
+
+                        </button>
+
+                    </div>
+
+                    }
+
+                </div>
+            </div>
+
+            <!-- Options -->
+
+            <div>
+
+                <h2 class="text-xl font-semibold mb-5">
+                    Options
+                </h2>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+                    <label class="flex items-center gap-2">
+
+                        <input type="checkbox" formControlName="isFavorite">
+
+                        ⭐ Favorite
+
+                    </label>
+
+                    <label class="flex items-center gap-2">
+
+                        <input type="checkbox" formControlName="isPined">
+
+                        📌 Pinned
+
+                    </label>
+
+                    <label class="flex items-center gap-2">
+
+                        <input type="checkbox" formControlName="isReminded">
+
+                        🔔 Reminder
+
+                    </label>
+
+                    <label class="flex items-center gap-2">
+
+                        <input type="checkbox" formControlName="isActive">
+
+                        ✅ Active
+
+                    </label>
+
+                </div>
+
+            </div>
+
+            <!-- Buttons -->
+
+            <div class="flex justify-end gap-4 pt-6">
+
+                <button (click)="reset()" type="button"
+                    class="px-8 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 disabled:bg-gray-400 enabled:cursor-pointer enabled:hover:font-bold disabled:cursor-not-allowed">
+
+                    Cancel
+
+                </button>
+
+                <!-- <button type="submit" class="px-8 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700">
+
+                    💾 Save Note
+
+                </button> -->
+                <!--  -->
+                <button type="submit" [disabled]="noteForm.invalid"
+                    class="px-8 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 disabled:bg-gray-400 enabled:cursor-pointer enabled:hover:font-bold disabled:cursor-not-allowed">
+
+                    💾 Save Note
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>

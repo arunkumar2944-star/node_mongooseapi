@@ -26,12 +26,46 @@ router.get('/list', auth, async (req, res) => {
 
 router.get('/getByID/:id', auth, async (req, res) => {
     try {
-        const note = await Note.findOne({ _id: req.query.id });
+        const note = await Note.findOne({ _id: req.params.id });
         res.json(note);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 });
+// Get:NoteList by UserID
+router.get('/getByUserID', auth, async (req, res) => {
+    try {
+        // console.log(req.user)
+        const userid=req.user.userId;
+        const notes = await Note.find({
+            createdBy: userid
+        });
+
+        const updatedNotes = notes.map(note => {
+
+            const obj = note.toObject();
+
+            obj.attachmentUrl = obj.attachmentUrl.map(file => {
+                return `${req.protocol}://${req.get('host')}/${file}`;
+            });
+
+            return obj;
+        });
+
+        res.json({
+            status:"Success",
+            message:"Note List by userid",
+            notes:updatedNotes});
+
+    } catch (err) {
+
+        res.status(500).json({
+            message: err.message
+        });
+
+    }
+});
+
 
 // POST: Create a new Note
 router.post(
@@ -40,9 +74,11 @@ router.post(
     async (req, res) => {
 
         try {
-           const files = req.files
-    ? req.files.map(file => file.path)
-    : [];
+            const files = req.files
+                ? req.files.map(file =>
+                    file.path.replace(/\\/g, '/')
+                )
+                : [];
 
             const note = new Note({
                 title: req.body.title,
