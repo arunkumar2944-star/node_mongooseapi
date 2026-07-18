@@ -48,7 +48,6 @@ router.get('/getByUserID', auth, async (req, res) => {
             obj.attachmentUrl = obj.attachmentUrl.map(file => {
                 return `${req.protocol}://${req.get('host')}/${file}`;
             });
-
             return obj;
         });
 
