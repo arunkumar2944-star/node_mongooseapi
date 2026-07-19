@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const { Priority, Status, Category } = require('./enum');
 
 const NoteSchema = new mongoose.Schema({
     title: { type: String, required: true },
@@ -9,9 +9,23 @@ const NoteSchema = new mongoose.Schema({
         type: [String],
         default: []
     },
-    category: { type: String, required: true },
-    priority: { type: String, required: true },
-    status: { type: String, required: true },
+    priority: {
+        type: String,
+        enum: Object.values(Priority),
+        default: Priority.MEDIUM
+    },
+
+    status: {
+        type: String,
+        enum: Object.values(Status),
+        default: Status.DRAFT
+    },
+
+    category: {
+        type: String,
+        enum: Object.values(Category),
+        default: Category.PERSONAL
+    },
      date: {
         type: Date,
         default: Date.now

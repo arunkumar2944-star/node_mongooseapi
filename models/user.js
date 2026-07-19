@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { UserType } = require('./enum');
 
 const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -8,7 +9,11 @@ const UserSchema = new mongoose.Schema({
   phoneNo:{ type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  type: Number,
+   type: {
+        type: String,
+        enum: Object.values(UserType),
+        default: UserType.User
+    },
   token:{type:String,required:false},
   createdBy: Number ,
   createdAt: Date,
@@ -16,6 +21,7 @@ const UserSchema = new mongoose.Schema({
   updatedAt: Date,
   isActive: Boolean
 });
+
 // Automatically hash password before saving to MongoDB
 
 // Method to verify passwords during login
