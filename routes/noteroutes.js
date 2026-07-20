@@ -43,7 +43,7 @@ router.get('/getByID/:id', auth, async (req, res) => {
 // Get:NoteList by UserID with pagination
 router.get('/getByUserID', auth, async (req, res) => {
     try {
-        console.log(req.user)
+        //console.log(req.user)
         const page = Number(req.query.page) || 1;
 
         const limit = Number(req.query.limit) || 10;
